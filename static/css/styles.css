@@ -122,12 +122,40 @@ li:hover {
     cursor: pointer;
 }
 
-img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+/*img {*/
+    /*display: block;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*padding: 10px;*/
+    /*max-width: 50%;*/
+/*}*/
+
+/* Control the left side */
+.left {
+    width: 50%;
+    height: 100%;
+    position: relative;
+    float: left;
+}
+
+.left img {
+width: 100%;
     padding: 10px;
-    max-width: 50%;
+}
+
+/* Control the right side */
+.right {
+    height: 100%;
+    width: 50%;
+    float: left;
+    position: relative;
+    padding: 20px;
+}
+
+.comment {
+    float: left;
+    width: 100%;
+    padding: 20px;
 }
 
 

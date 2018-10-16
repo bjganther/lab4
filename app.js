@@ -1,9 +1,9 @@
 const express = require('express');
 const expressVue = require('express-vue');
 const path = require('path');
-const sqlite3 = require('sqlite3');
+//const sqlite3 = require('sqlite3');
 var bodyParser = require('body-parser');
-
+const sqlite3 = require('sqlite3').verbose();
 
 
 
@@ -58,7 +58,8 @@ const vueOptions = {
   rootPath: path.join(__dirname, '/views')
 };
 
-
+// Comment on object
+let allcomments = [];
 // Initialize express-vue
 const expressVueMiddleware = expressVue.init(vueOptions);
 app.use(expressVueMiddleware);
@@ -93,29 +94,56 @@ app.get('/gallery/:gallery_id', (req, res) => {
 
 // Show object
 app.get('/object/:objectnumber', (req, res) => {
-  let todos = ["one", "two", "three"];
+
+
+
+
   const singleURL = `https://api.harvardartmuseums.org/object?size=100&apikey=${API_KEY}&objectnumber=${req.params.objectnumber}`;
   //calls API for individual object
   fetch(singleURL)
     .then(response => response.json())
     .then(data => {
       let singles = data.records[0];
+      let todos = allcomments[req.params.objectnumber];
+      if (! todos) {
+        todos=[];
+      }
+      console.log("109 todos");
+      console.log(todos);
+
+      //selects comments for this object from SQL table
+      db.all(`SELECT comment FROM CommentsTable WHERE objectnumber = ?`, [`${req.params.objectnumber}`], (err, rows) => {
+
+          console.log("116 rows");
+          console.log(rows);
+          // pushes comments from each row onto todos array
+          rows.forEach((row => {
+            if (!(todos.includes(row.comment))) {
+              todos.push(row.comment);
+
+            }
+
+          }))
 
 
+        }
+      );
+      console.log("129 todos");
+      console.log(todos);
+      //render singles page
       res.renderVue('singles.vue', {singles, todos});
-    });
-});
+    }); });
 
-// Comment on object
-let allcomments = [];
+
+
 
 
 
 app.post('/object/:objectnumber/comment', (req, res) => {
-
+  console.log("140 req.body.todo");
   console.log(req.body.todo);
-  console.log("116");
 
+// push new comment onto "allcomments" array
   if(allcomments[req.params.objectnumber]) {
     allcomments[req.params.objectnumber].push(req.body.todo);
   }
@@ -123,17 +151,10 @@ app.post('/object/:objectnumber/comment', (req, res) => {
     allcomments[req.params.objectnumber] = [];
     allcomments[req.params.objectnumber].push(req.body.todo);
   }
+  console.log("151 allcomments")
   console.log(allcomments);
 
-
-
-
-  /*db.run(`INSERT INTO CommentsTable (comment, username, objectnumber) VALUES(?,?,?)`,
-  [`${comment}`, `${username}`, `${req.params.objectnumber}`], function(err) {
-    if (err) {
-        return console.log(err.message);
-    }
-  }); */
+  //insert new comment into SQL table
   db.run(`INSERT INTO CommentsTable (comment, objectnumber) VALUES(?,?)`,
     [`${req.body.todo}`, `${req.params.objectnumber}`], function(err) {
       if (err) {
@@ -141,18 +162,37 @@ app.post('/object/:objectnumber/comment', (req, res) => {
       }
     });
 
-  res.redirect(`/object/${req.params.objectnumber}`);
+  db.all(`SELECT comment FROM CommentsTable WHERE objectnumber = ?`, [`${req.params.objectnumber}`], (err, rows) => {
+    if (! allcomments[req.params.objectnumber]) {
+      allcomments[req.params.objectnumber] = []
+    }
+    console.log("116 rows");
+    console.log(rows);
+    // pushes comments from each row onto todos array
+    rows.forEach((row => {
+      if (!(allcomments[req.params.objectnumber].includes(row.comment))) {
+        allcomments[req.params.objectnumber].push(row.comment);
+
+      }
+
+    }))
+  });
+  const singleURL = `https://api.harvardartmuseums.org/object?size=100&apikey=${API_KEY}&objectnumber=${req.params.objectnumber}`;
+  //calls API for individual object
+  fetch(singleURL)
+    .then(response => response.json())
+    .then(data => {
+      let singles = data.records[0];
+      let todos = allcomments[req.params.objectnumber];
+
+      res.redirect(`/object/${req.params.objectnumber}`);
+    });
 });
 
 
-/*  let length= db.get(`SELECT COUNT (comment) FROM CommentsTable`);
-                    for (i = 0; i < length; i++) {
-                        this.todos.push(`SELECT comment FROM CommentsTable WHERE id=i`);
-                    }*/
 
 // Listen on socket
 app.listen(port, hostname, () => {
   console.log(`Server running on http://${hostname}:${port}/`);
 });
-
 
