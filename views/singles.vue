@@ -6,18 +6,18 @@
 
 <template>
   <div>
-    <h1>Single Listing</h1>
-    
-             {{ singles.title }} 
-             People: {{ singles.people[0].name }}
-             <a v-bind:href="singles.url"> More Information </a>
-             
-            
+      <h1 class="titleBanner"> {{ singles.title }} </h1>
+      <img v-bind:src="singles.primaryimageurl">
+      <p class="title"> {{ singles.description }} </p>
+      People: {{ singles.people[0].name }}
+      <a v-bind:href="singles.url"> More Information </a>
+
+
   </div>
 </template>
 
 <script>
-  
+
 export default {
     data() {
       return {};

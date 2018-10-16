@@ -1,1 +1,138 @@
-test
+h1 {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://s3.amazonaws.com/media.thecrimson.com/photos/2014/11/11/031259_1301149.jpg");
+}
+
+p {
+    font-size: 12px;
+}
+
+.titleBanner {
+    text-transform: uppercase;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 36px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: white;
+}
+
+span {
+    position: absolute;
+    line-height: 25px;
+    color: lightgray;
+    opacity: 50%
+}
+
+a {
+    color: black;
+}
+
+ul {
+    list-style-type: none;
+    width: 97%;
+}
+
+.objectview {
+    list-style-type: none;
+}
+
+li {
+    padding: 10px;
+    overflow: auto;
+}
+
+.galleryUL .galleryLI {
+    font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+    border-bottom: 1px solid #ccc;
+
+}
+
+.galleryUL a {
+    margin-left: 80px;
+}
+
+.galleryLI a {
+    -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
+    display: block;
+}
+
+.galleryLI:last-child {
+    border: none;
+}
+
+.galleryLI a:hover {
+    font-size: 30px;
+    background:#eee;
+}
+
+span {
+    position: absolute;
+    line-height: 25px;
+}
+
+li img {
+    float: left;
+    margin: 0 15px 0 0;
+}
+
+.thumbnail {
+    height: 110px;
+    width: 110px;
+}
+
+.objectLI:hover {
+    -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+    -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+    transition: font-size 0.3s ease, background-color 0.3s ease;
+    display: block;
+}
+
+.objectLI:last-child {
+    border: none;
+}
+
+.objectLI:hover {
+    font-size: 30px;
+    background:#eee;
+}
+
+.objectLI img:hover {
+    height: 50%;
+    width: 50%;
+}
+
+li a {
+    font: bold 15px/1.5 Helvetica, Verdana, sans-serif;
+    color:gray();
+}
+
+li .description {
+    font: 200 12px/1.5 Georgia, Times New Roman, serif;
+}
+
+li:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    max-width: 50%;
+}
+
+
+
+
+
+
+

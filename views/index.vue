@@ -6,19 +6,18 @@
 
 <template>
   <div>
-    <h1>Gallery Listing</h1>
-    <ul>
-      <li v-for="gallery in galleries">
-          <a v-bind:href="'/gallery/' + gallery.id"> {{ gallery.name }}
-        {{ gallery.id }}
-        Floor: {{ gallery.floor }} </a>
+    <h1 class="titleBanner">Gallery Listing</h1>
+    <ul class="galleryUL">
+      <li class="galleryLI" v-for="gallery in galleries">
+          <span> {{ gallery.id }}</span>
+          <a v-bind:href="'/gallery/' + gallery.id"> {{ gallery.name }} </a>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-  
+
 export default {
     data() {
       return {};
